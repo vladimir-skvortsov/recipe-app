@@ -9,18 +9,6 @@ export const Home = Loadable({
   loading: Loading,
 })
 
-export const SignUp = Loadable({
-  delay: 500,
-  loader: () => import('@client/scenes/SignUp/SignUp'),
-  loading: Loading,
-})
-
-export const SignIn = Loadable({
-  delay: 500,
-  loader: () => import('@client/scenes/SignIn/SignIn'),
-  loading: Loading,
-})
-
 export const NotFound = Loadable({
   delay: 500,
   loader: () => import('@client/scenes/NotFound/NotFound'),
