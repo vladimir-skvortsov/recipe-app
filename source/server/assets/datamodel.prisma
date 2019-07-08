@@ -1,6 +1,6 @@
 type Recipe {
   id: ID! @id
   poster: String
-  name: String
+  name: String!
   tags: [String!]!
 }

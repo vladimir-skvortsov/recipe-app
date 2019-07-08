@@ -1,7 +1,29 @@
 scalar Upload
 
 
+type Recipe {
+  id: ID!
+  poster: String
+  name: String!
+  tags: [String!]!
+}
+
 type Query {
   # Ping the server.
   ping: String!
+  recipes: [Recipe!]!
+  recipe(id: ID!): Recipe!
+}
+
+
+input AddUpdateRecipeProps {
+  poster: String
+  name: String!
+  tags: [String!]!
+}
+
+type Mutation {
+  removeRecipe(id: ID!): Recipe!
+  addRecipe(props: AddUpdateRecipeProps!): Recipe!
+  updateRecipe(id: ID!, props: AddUpdateRecipeProps!): Recipe!
 }
