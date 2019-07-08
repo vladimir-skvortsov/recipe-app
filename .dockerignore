@@ -1,0 +1,48 @@
+# OS generated files
+ehthumbs.db
+._*
+.AppleDouble
+.DS_Store
+.DS_Store?
+.LSOverride
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+*.log
+logs
+
+# Dependency directories
+node_modules/
+
+# Dotenv environment variables file
+.env*
+
+# Cache
+cache/
+
+# Visual Studio Code
+.settings/
+.vscode/
+
+# Compiled project
+build/
+
+# Testing
+coverage/
+
+# Useless files for the build
+__snapshots__/
+.dockerignore
+.gitignore
+*.test.*
+docker-compose*
+Dockerfile*
+LICENSE
+README.md
+jest.config.js
+LICENSE
+README.md
+setupTests.js

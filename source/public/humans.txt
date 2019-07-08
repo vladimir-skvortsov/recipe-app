@@ -1,0 +1,6 @@
+# humanstxt.org/
+# The humans responsible & technology colophon
+
+UI/UX designer & full-stack web developer: Vladimir Skvortsov <public@vladimirskvortsov.com>
+Site: https://vladimirskvortsov.com
+From: Tomsk, Russia

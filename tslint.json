@@ -1,0 +1,66 @@
+{
+  "defaultSeverity": "error",
+  "project": "./tsconfig.json",
+  "extends": [
+    "tslint:latest",
+    "tslint-config-airbnb",
+    "tslint-react",
+    "tslint-config-prettier"
+  ],
+  "linterOptions": {
+    "exclude": [
+      "source/server/utils/prisma/**/*"
+    ]
+  },
+  "jsRules": {},
+  "rules": {
+    "jsx-wrap-multiline": false,
+    "trailing-comma": [true, {
+      "singleline": "never",
+      "multiline": {
+        "objects": "always",
+        "arrays": "always",
+        "functions": "always",
+        "typeLiterals": "always"
+      }
+    }],
+    "no-submodule-imports": false,
+    "ordered-imports": false,
+    "import-name": false,
+    "no-implicit-dependencies": [
+      true,
+      "dev",
+      ["@client", "@server", "@shared"]
+    ],
+    "no-unused-variable": true,
+    "jsx-boolean-value": false,
+    "variable-name": [
+      true,
+      "ban-keywords",
+      "check-format",
+      "allow-pascal-case",
+      "allow-leading-underscore"
+    ],
+    "quotemark": [true, "single"],
+    "semicolon": [true, "never"],
+    "whitespace": [
+      false,
+      "check-branch",
+      "check-decl",
+      "check-operator",
+      "check-separator",
+      "check-type"
+    ],
+    "no-trailing-whitespace": true,
+    "jsx-no-lambda": false,
+    "interface-name": false,
+    "no-shadowed-variable": false,
+    "curly": false,
+    "no-empty": false,
+    "object-literal-sort-keys": false,
+    "member-access": [true, "no-public"],
+    "no-console": false,
+    "object-shorthand-properties-first": false
+  },
+  "rulesDirectory": []
+}

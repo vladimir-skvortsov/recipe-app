@@ -1,0 +1,17 @@
+scalar Upload
+
+
+type Query {
+  # Ping the server.
+  ping: String!
+}
+
+type PublicUser {
+  id: ID!
+  token: String!
+}
+
+type Mutation {
+  signUp(email: String!, password: String!): PublicUser!
+  signIn(email: String!, password: String!): PublicUser!
+}

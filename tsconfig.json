@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "alwaysStrict": true,
+    "baseUrl": ".",
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "jsx": "react",
+    "lib": ["dom", "esnext"],
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noUnusedLocals": true,
+    "rootDirs": ["source", ".storybook", "stories"],
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "target": "es5",
+    "paths": {
+      "@client/*": ["source/client/*"],
+      "@server/*": ["source/server/*"],
+      "@shared/*": ["source/shared/*"]
+    }
+  },
+  "include": [
+    "typings.d.ts",
+    "source/**/*",
+    "stories/*.stories.tsx"
+  ],
+  "exclude": ["node_modules"]
+}
