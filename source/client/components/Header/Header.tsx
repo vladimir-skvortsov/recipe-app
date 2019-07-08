@@ -1,39 +1,18 @@
 import React from 'react'
-import { Row, Col } from 'antd'
-import { NavLink } from 'react-router-dom'
+import { Row, Col, Button } from 'antd'
 
 import { Container } from './Header.styles'
-
-import navItems from '@client/data/navItems'
 
 
 const Header = () =>
   <Container>
-    <Row>
-      <Col span={8}>
-        <Row gutter={20} type='flex'>
-          {navItems.map(({ name, url }) => (
-            <Col key={name}>
-              <NavLink exact to={url}>
-                {name}
-              </NavLink>
-            </Col>
-          ))}
-        </Row>
+    <Row type='flex' justify='space-between'>
+      <Col>
+        <h1>Recipe App</h1>
       </Col>
 
-      <Col span={8}>
-        <Row type='flex' justify='center'>
-          <h1>Logo</h1>
-        </Row>
-      </Col>
-
-      <Col span={8}>
-        <Row type='flex' justify='end'>
-          <NavLink exact to='/sign-in'>
-            Sign In
-          </NavLink>
-        </Row>
+      <Col>
+        <Button type='primary'>Add Recipe</Button>
       </Col>
     </Row>
   </Container>
