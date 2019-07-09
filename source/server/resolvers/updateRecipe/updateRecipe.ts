@@ -1,7 +1,4 @@
-import { prisma } from '@server/utils/prisma/prisma'
-
-
-const updateRecipe = (root, { id, props }) => prisma.updateRecipe({ data: props, where: { id } })
+const updateRecipe = (root, { id, props }, { database }) => database.updateRecipe({ data: props, where: { id } })
 
 
 export default updateRecipe

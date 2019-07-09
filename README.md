@@ -50,7 +50,6 @@ In the project directory, you can run:
 * [Mongoose](https://github.com/Automattic/mongoose) - MongoDB object modeling designed to work in an asynchronous environment.
 * [React Router](https://github.com/ReactTraining/react-router) - DOM bindings for React Router.
 * [React](https://github.com/facebook/react) - A declarative, efficient, and flexible JavaScript library for building user interfaces.
-* [Redux](https://github.com/reduxjs/redux) - Redux is a predictable state container for JavaScript apps.
 * [Styled Components](https://github.com/styled-components/styled-components) - Visual primitives for the component age. Use the best bits of ES6 and CSS to style your apps without stress.
 
 
@@ -127,8 +126,6 @@ A quick look at the top-level files and directories you'll see in the project.
 * **`/source/server`** - Directory containing all the files associated with the server part of the application.
 * **`/source/server/resolvers`** - Directory containing resolvers for [Apollo Server](https://github.com/apollographql/apollo-server).
 * **`/source/shared`** - Directory containing all the files associated with both the client and server part of the application.
-* **`/source/shared/reducers`** - Directory containing reducers for [Redux](https://redux.js.org/).
-* **`/source/shared/actions`** - Directory containing actions for [Redux](https://redux.js.org/).
 <br>
 <br>
 * **`**/assets`** - Directory containing different assets like images, sounds, documents, etc.

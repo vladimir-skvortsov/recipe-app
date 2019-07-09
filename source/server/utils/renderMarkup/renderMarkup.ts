@@ -14,7 +14,6 @@ export interface MarkupData {
   apolloState: NormalizedCacheObject
   content: string
   helmet: HelmetData
-  reduxState: object
   scripts: Bundle[]
   styleTags: string
   styles: Bundle[]

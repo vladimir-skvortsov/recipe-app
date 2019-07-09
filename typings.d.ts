@@ -1,5 +1,4 @@
 interface Window {
-  __REDUX_STATE__: any
   __APOLLO_STATE__: any
 }
 

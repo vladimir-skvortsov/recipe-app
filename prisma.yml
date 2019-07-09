@@ -1,5 +1,4 @@
-endpoint: ${env:PRISMA_ENDPOINT, "http://localhost:4466"}
-secret: ${env:PRISMA_SECRET, ""}
+endpoint: http://localhost:4466
 datamodel: source/server/assets/datamodel.prisma
 databaseType: document
 

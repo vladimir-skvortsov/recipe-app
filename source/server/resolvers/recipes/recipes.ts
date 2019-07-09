@@ -1,7 +1,4 @@
-import { prisma } from '@server/utils/prisma/prisma'
-
-
-const recipes = () => prisma.recipes()
+const recipes = (root, args, { database }) => database.recipes()
 
 
 export default recipes

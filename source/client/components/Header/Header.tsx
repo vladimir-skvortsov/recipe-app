@@ -4,7 +4,12 @@ import { Row, Col, Button } from 'antd'
 import { Container } from './Header.styles'
 
 
-const Header = () =>
+export interface Props {
+  openRecipeModal: () => any
+}
+
+
+const Header = ({ openRecipeModal }: Props) =>
   <Container>
     <Row type='flex' justify='space-between'>
       <Col>
@@ -12,7 +17,12 @@ const Header = () =>
       </Col>
 
       <Col>
-        <Button type='primary'>Add Recipe</Button>
+        <Button
+          type='primary'
+          onClick={openRecipeModal}
+        >
+          Add Recipe
+        </Button>
       </Col>
     </Row>
   </Container>

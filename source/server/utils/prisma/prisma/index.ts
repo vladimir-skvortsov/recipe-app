@@ -114,7 +114,7 @@ export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 export interface RecipeCreateInput {
   id?: Maybe<ID_Input>;
   poster?: Maybe<String>;
-  name?: Maybe<String>;
+  name: String;
   tags?: Maybe<RecipeCreatetagsInput>;
 }
 
@@ -204,7 +204,7 @@ export interface NodeNode {
 export interface RecipePreviousValues {
   id: ID_Output;
   poster?: String;
-  name?: String;
+  name: String;
   tags: String[];
 }
 
@@ -303,7 +303,7 @@ export interface RecipeSubscriptionPayloadSubscription
 export interface Recipe {
   id: ID_Output;
   poster?: String;
-  name?: String;
+  name: String;
   tags: String[];
 }
 
@@ -417,7 +417,6 @@ export const models: Model[] = [
 export const Prisma = makePrismaClientClass<ClientConstructor<Prisma>>({
   typeDefs,
   models,
-  endpoint: `${process.env['PRISMA_ENDPOINT, "http://localhost:4466"']}`,
-  secret: `${process.env['PRISMA_SECRET, ""']}`
+  endpoint: `http://localhost:4466`
 });
 export const prisma = new Prisma();

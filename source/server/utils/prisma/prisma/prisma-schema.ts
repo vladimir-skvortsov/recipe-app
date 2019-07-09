@@ -48,7 +48,7 @@ type Query {
 type Recipe {
   id: ID!
   poster: String
-  name: String
+  name: String!
   tags: [String!]!
 }
 
@@ -61,7 +61,7 @@ type RecipeConnection {
 input RecipeCreateInput {
   id: ID
   poster: String
-  name: String
+  name: String!
   tags: RecipeCreatetagsInput
 }
 
@@ -86,7 +86,7 @@ enum RecipeOrderByInput {
 type RecipePreviousValues {
   id: ID!
   poster: String
-  name: String
+  name: String!
   tags: [String!]!
 }
 
