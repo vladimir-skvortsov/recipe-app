@@ -1,5 +1,5 @@
-import React, { useReducer } from 'react'
-import { Modal, Form, Input, Upload, Button, Row, Col, Tag, Tooltip } from 'antd'
+import React, { useReducer, FormEvent } from 'react'
+import { Modal, Form, Input, Upload, Button, Row, Col, Tag, Tooltip, message } from 'antd'
 import { FormComponentProps } from 'antd/lib/form'
 import { FaUpload, FaPlus } from 'react-icons/fa'
 import { flow } from 'lodash'
@@ -30,9 +30,35 @@ const AddRecipeModal = ({
 
   closeRecipeModal,
   addRecipe,
-  form: { getFieldDecorator, validateFields },
+  form: { getFieldDecorator, validateFields, resetFields },
 }: Props) => {
   const [state, dispatch] = useReducer(reducer, initialState)
+
+
+  const submitForm = (event?: FormEvent) => {
+    if (event && event.preventDefault) event.preventDefault()
+
+    validateFields(async (error, { name, poster }) => {
+      const posterFile = poster && poster.fileList.length ? poster.fileList[0].originFileObj : undefined
+
+      try {
+        await addRecipe({
+          name,
+          poster: posterFile,
+          tags: state.tags,
+        })
+
+        message.success('The recipe was added!')
+        closeRecipeModal()
+
+        resetFields()
+        dispatch({ type: 'resetTags' })
+      } catch (error) {
+        message.error('Error')
+      }
+    })
+  }
+
 
   return (
     <Modal
@@ -40,22 +66,9 @@ const AddRecipeModal = ({
       visible={visible}
       onCancel={closeRecipeModal}
       okText='Add'
-      onOk={() => {
-        validateFields(async (error, { name, poster: { fileList } }) => {
-          console.log(fileList)
-          const poster = fileList.length ? fileList[0].originFileObj : undefined
-          console.log(poster)
-
-          const { data: { addRecipe: recipeProps } } = await addRecipe({
-            name,
-            poster,
-            tags: state.tags,
-          })
-          console.log(recipeProps)
-        })
-      }}
+      onOk={submitForm}
     >
-      <Form>
+      <Form onSubmit={submitForm}>
         <Form.Item label='Name'>
           {getFieldDecorator('name', {
             rules: [

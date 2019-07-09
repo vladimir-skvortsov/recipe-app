@@ -2,6 +2,7 @@ type Action =
   | { type: 'closeTag', tag: string }
   | { type: 'showInput' }
   | { type: 'confirmInput', tag?: string }
+  | { type: 'resetTags' }
 
 interface State {
   tags: string[]
@@ -16,6 +17,8 @@ const reducer = (state: State, action: Action) => {
   switch (action.type) {
     case 'closeTag':
       return { ...state, tags: state.tags.filter(tag => tag !== action.tag) }
+    case 'resetTags':
+      return initialState
     case 'showInput':
       return { ...state, inputVisible: true }
     case 'confirmInput':
