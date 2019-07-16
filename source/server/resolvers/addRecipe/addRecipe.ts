@@ -3,8 +3,6 @@ import streamToBuffer from '@server/utils/streamToBuffer/streamToBuffer'
 
 
 const addRecipe = async (root, { props }) => {
-  const { poster, ...rest } = props
-  console.log(rest)
   let rawPoster
   if (props.poster) {
     const { createReadStream } = await props.poster
