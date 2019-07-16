@@ -1,6 +1,30 @@
+enum IngredientEnum {
+  Item
+  G
+  Ml
+  Tsp
+  Tbsp
+}
+
+type Ingredient @embeded {
+  id: ID! @id
+  name: String!
+  quantity: Float!
+  unit: IngredientEnum!
+}
+
 type Recipe {
   id: ID! @id
   poster: String
   name: String!
   tags: [String!]!
+  description: String
+
+  ingredients: [Ingredient!]! @relation(link: INLINE)
+  directions: [String!]!
+
+  calories: Int
+  protein: Int
+  carbohydrates: Int
+  fat: Int
 }

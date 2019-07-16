@@ -2,7 +2,11 @@
   // Please don't change this file manually but run `prisma generate` to update it.
   // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-export const typeDefs = /* GraphQL */ `type AggregateRecipe {
+export const typeDefs = /* GraphQL */ `type AggregateIngredient {
+  count: Int!
+}
+
+type AggregateRecipe {
   count: Int!
 }
 
@@ -10,9 +14,233 @@ type BatchPayload {
   count: Long!
 }
 
+type Ingredient {
+  id: ID!
+  name: String!
+  quantity: Float!
+  unit: IngredientEnum!
+}
+
+type IngredientConnection {
+  pageInfo: PageInfo!
+  edges: [IngredientEdge]!
+  aggregate: AggregateIngredient!
+}
+
+input IngredientCreateInput {
+  id: ID
+  name: String!
+  quantity: Float!
+  unit: IngredientEnum!
+}
+
+input IngredientCreateManyInput {
+  create: [IngredientCreateInput!]
+  connect: [IngredientWhereUniqueInput!]
+}
+
+type IngredientEdge {
+  node: Ingredient!
+  cursor: String!
+}
+
+enum IngredientEnum {
+  Item
+  G
+  Ml
+  Tsp
+  Tbsp
+}
+
+enum IngredientOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  quantity_ASC
+  quantity_DESC
+  unit_ASC
+  unit_DESC
+}
+
+type IngredientPreviousValues {
+  id: ID!
+  name: String!
+  quantity: Float!
+  unit: IngredientEnum!
+}
+
+input IngredientScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  quantity: Float
+  quantity_not: Float
+  quantity_in: [Float!]
+  quantity_not_in: [Float!]
+  quantity_lt: Float
+  quantity_lte: Float
+  quantity_gt: Float
+  quantity_gte: Float
+  unit: IngredientEnum
+  unit_not: IngredientEnum
+  unit_in: [IngredientEnum!]
+  unit_not_in: [IngredientEnum!]
+  AND: [IngredientScalarWhereInput!]
+  OR: [IngredientScalarWhereInput!]
+  NOT: [IngredientScalarWhereInput!]
+}
+
+type IngredientSubscriptionPayload {
+  mutation: MutationType!
+  node: Ingredient
+  updatedFields: [String!]
+  previousValues: IngredientPreviousValues
+}
+
+input IngredientSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: IngredientWhereInput
+  AND: [IngredientSubscriptionWhereInput!]
+}
+
+input IngredientUpdateDataInput {
+  name: String
+  quantity: Float
+  unit: IngredientEnum
+}
+
+input IngredientUpdateInput {
+  name: String
+  quantity: Float
+  unit: IngredientEnum
+}
+
+input IngredientUpdateManyDataInput {
+  name: String
+  quantity: Float
+  unit: IngredientEnum
+}
+
+input IngredientUpdateManyInput {
+  create: [IngredientCreateInput!]
+  update: [IngredientUpdateWithWhereUniqueNestedInput!]
+  upsert: [IngredientUpsertWithWhereUniqueNestedInput!]
+  delete: [IngredientWhereUniqueInput!]
+  connect: [IngredientWhereUniqueInput!]
+  set: [IngredientWhereUniqueInput!]
+  disconnect: [IngredientWhereUniqueInput!]
+  deleteMany: [IngredientScalarWhereInput!]
+  updateMany: [IngredientUpdateManyWithWhereNestedInput!]
+}
+
+input IngredientUpdateManyMutationInput {
+  name: String
+  quantity: Float
+  unit: IngredientEnum
+}
+
+input IngredientUpdateManyWithWhereNestedInput {
+  where: IngredientScalarWhereInput!
+  data: IngredientUpdateManyDataInput!
+}
+
+input IngredientUpdateWithWhereUniqueNestedInput {
+  where: IngredientWhereUniqueInput!
+  data: IngredientUpdateDataInput!
+}
+
+input IngredientUpsertWithWhereUniqueNestedInput {
+  where: IngredientWhereUniqueInput!
+  update: IngredientUpdateDataInput!
+  create: IngredientCreateInput!
+}
+
+input IngredientWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  quantity: Float
+  quantity_not: Float
+  quantity_in: [Float!]
+  quantity_not_in: [Float!]
+  quantity_lt: Float
+  quantity_lte: Float
+  quantity_gt: Float
+  quantity_gte: Float
+  unit: IngredientEnum
+  unit_not: IngredientEnum
+  unit_in: [IngredientEnum!]
+  unit_not_in: [IngredientEnum!]
+  AND: [IngredientWhereInput!]
+}
+
+input IngredientWhereUniqueInput {
+  id: ID
+}
+
 scalar Long
 
 type Mutation {
+  createIngredient(data: IngredientCreateInput!): Ingredient!
+  updateIngredient(data: IngredientUpdateInput!, where: IngredientWhereUniqueInput!): Ingredient
+  updateManyIngredients(data: IngredientUpdateManyMutationInput!, where: IngredientWhereInput): BatchPayload!
+  upsertIngredient(where: IngredientWhereUniqueInput!, create: IngredientCreateInput!, update: IngredientUpdateInput!): Ingredient!
+  deleteIngredient(where: IngredientWhereUniqueInput!): Ingredient
+  deleteManyIngredients(where: IngredientWhereInput): BatchPayload!
   createRecipe(data: RecipeCreateInput!): Recipe!
   updateRecipe(data: RecipeUpdateInput!, where: RecipeWhereUniqueInput!): Recipe
   updateManyRecipes(data: RecipeUpdateManyMutationInput!, where: RecipeWhereInput): BatchPayload!
@@ -39,6 +267,9 @@ type PageInfo {
 }
 
 type Query {
+  ingredient(where: IngredientWhereUniqueInput!): Ingredient
+  ingredients(where: IngredientWhereInput, orderBy: IngredientOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Ingredient]!
+  ingredientsConnection(where: IngredientWhereInput, orderBy: IngredientOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): IngredientConnection!
   recipe(where: RecipeWhereUniqueInput!): Recipe
   recipes(where: RecipeWhereInput, orderBy: RecipeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Recipe]!
   recipesConnection(where: RecipeWhereInput, orderBy: RecipeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RecipeConnection!
@@ -50,6 +281,13 @@ type Recipe {
   poster: String
   name: String!
   tags: [String!]!
+  description: String
+  ingredients(where: IngredientWhereInput, orderBy: IngredientOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Ingredient!]
+  directions: [String!]!
+  calories: Int
+  protein: Int
+  carbohydrates: Int
+  fat: Int
 }
 
 type RecipeConnection {
@@ -58,11 +296,22 @@ type RecipeConnection {
   aggregate: AggregateRecipe!
 }
 
+input RecipeCreatedirectionsInput {
+  set: [String!]
+}
+
 input RecipeCreateInput {
   id: ID
   poster: String
   name: String!
   tags: RecipeCreatetagsInput
+  description: String
+  ingredients: IngredientCreateManyInput
+  directions: RecipeCreatedirectionsInput
+  calories: Int
+  protein: Int
+  carbohydrates: Int
+  fat: Int
 }
 
 input RecipeCreatetagsInput {
@@ -81,6 +330,16 @@ enum RecipeOrderByInput {
   poster_DESC
   name_ASC
   name_DESC
+  description_ASC
+  description_DESC
+  calories_ASC
+  calories_DESC
+  protein_ASC
+  protein_DESC
+  carbohydrates_ASC
+  carbohydrates_DESC
+  fat_ASC
+  fat_DESC
 }
 
 type RecipePreviousValues {
@@ -88,6 +347,12 @@ type RecipePreviousValues {
   poster: String
   name: String!
   tags: [String!]!
+  description: String
+  directions: [String!]!
+  calories: Int
+  protein: Int
+  carbohydrates: Int
+  fat: Int
 }
 
 type RecipeSubscriptionPayload {
@@ -106,16 +371,33 @@ input RecipeSubscriptionWhereInput {
   AND: [RecipeSubscriptionWhereInput!]
 }
 
+input RecipeUpdatedirectionsInput {
+  set: [String!]
+}
+
 input RecipeUpdateInput {
   poster: String
   name: String
   tags: RecipeUpdatetagsInput
+  description: String
+  ingredients: IngredientUpdateManyInput
+  directions: RecipeUpdatedirectionsInput
+  calories: Int
+  protein: Int
+  carbohydrates: Int
+  fat: Int
 }
 
 input RecipeUpdateManyMutationInput {
   poster: String
   name: String
   tags: RecipeUpdatetagsInput
+  description: String
+  directions: RecipeUpdatedirectionsInput
+  calories: Int
+  protein: Int
+  carbohydrates: Int
+  fat: Int
 }
 
 input RecipeUpdatetagsInput {
@@ -165,6 +447,53 @@ input RecipeWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  ingredients_some: IngredientWhereInput
+  calories: Int
+  calories_not: Int
+  calories_in: [Int!]
+  calories_not_in: [Int!]
+  calories_lt: Int
+  calories_lte: Int
+  calories_gt: Int
+  calories_gte: Int
+  protein: Int
+  protein_not: Int
+  protein_in: [Int!]
+  protein_not_in: [Int!]
+  protein_lt: Int
+  protein_lte: Int
+  protein_gt: Int
+  protein_gte: Int
+  carbohydrates: Int
+  carbohydrates_not: Int
+  carbohydrates_in: [Int!]
+  carbohydrates_not_in: [Int!]
+  carbohydrates_lt: Int
+  carbohydrates_lte: Int
+  carbohydrates_gt: Int
+  carbohydrates_gte: Int
+  fat: Int
+  fat_not: Int
+  fat_in: [Int!]
+  fat_not_in: [Int!]
+  fat_lt: Int
+  fat_lte: Int
+  fat_gt: Int
+  fat_gte: Int
   AND: [RecipeWhereInput!]
 }
 
@@ -173,6 +502,7 @@ input RecipeWhereUniqueInput {
 }
 
 type Subscription {
+  ingredient(where: IngredientSubscriptionWhereInput): IngredientSubscriptionPayload
   recipe(where: RecipeSubscriptionWhereInput): RecipeSubscriptionPayload
 }
 `

@@ -16,10 +16,33 @@ type Query {
 }
 
 
+enum IngredientEnum {
+  Item
+  G
+  Ml
+  Tsp
+  Tbsp
+}
+
+input Ingredient {
+  name: String!
+  quantity: Float!
+  unit: IngredientEnum!
+}
+
 input AddUpdateRecipeProps {
   poster: Upload
   name: String!
   tags: [String!]!
+  description: String
+
+  ingredients: [Ingredient!]!
+  directions: [String!]!
+
+  calories: Int
+  protein: Int
+  carbohydrates: Int
+  fat: Int
 }
 
 type Mutation {
