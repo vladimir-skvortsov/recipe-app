@@ -1,7 +1,7 @@
 import { lighten, darken } from 'polished'
 
 
-export const accentColor = '#CEFF8C'
+export const accentColor = '#10ac84'
 export const lightenAccentColor = lighten(.05, accentColor)
 export const darkenAccentColor = darken(.05, accentColor)
 

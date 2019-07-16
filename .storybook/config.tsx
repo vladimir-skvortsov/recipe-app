@@ -18,7 +18,7 @@ addParameters({
   backgrounds: [
     { name: 'Light', value: '#fff', default: true },
     { name: 'Dark', value: '#111' },
-    { name: 'Accent', value: '#CEFF8C' },
+    { name: 'Accent', value: '#10ac84' },
   ],
 })
 
