@@ -6,25 +6,32 @@ enum IngredientEnum {
   Tbsp
 }
 
-type Ingredient @embeded {
+type Ingredient {
   id: ID! @id
+  recipe: Recipe! @relation(name: "IngredientsByRecipe")
   name: String!
   quantity: Float!
   unit: IngredientEnum!
+
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }
 
 type Recipe {
   id: ID! @id
   poster: String
   name: String!
-  tags: [String!]!
+  tags: [String!]! @scalarList(strategy: RELATION)
   description: String
 
-  ingredients: [Ingredient!]! @relation(link: INLINE)
-  directions: [String!]!
+  ingredients: [Ingredient!]! @relation(name: "IngredientsByRecipe", onDelete: CASCADE)
+  directions: [String!]! @scalarList(strategy: RELATION)
 
   calories: Int
   protein: Int
   carbohydrates: Int
   fat: Int
+
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }

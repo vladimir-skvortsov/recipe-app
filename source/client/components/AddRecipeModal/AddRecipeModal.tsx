@@ -52,6 +52,7 @@ export interface Props extends FormComponentProps {
 
   closeRecipeModal: () => any
   addRecipe: (props: RecipeProps) => any
+  refetchRecipes: () => any
 }
 
 
@@ -60,6 +61,7 @@ const AddRecipeModal = ({
 
   closeRecipeModal,
   addRecipe,
+  refetchRecipes,
   form: { getFieldDecorator, validateFields, resetFields },
 }: Props) => {
   const [state, dispatch] = useReducer(reducer, initialState)
@@ -69,7 +71,6 @@ const AddRecipeModal = ({
     if (event && event.preventDefault) event.preventDefault()
 
     validateFields(async (error, values) => {
-      console.log(values)
       const posterFile = values.poster && values.poster.fileList.length ? values.poster.fileList[0].originFileObj : undefined
 
       const ingredientNames = Object.entries(values)
@@ -110,6 +111,7 @@ const AddRecipeModal = ({
 
         message.success('The recipe was added!')
         closeRecipeModal()
+        refetchRecipes()
 
         resetFields()
         dispatch({ type: 'resetTags' })
@@ -133,6 +135,7 @@ const AddRecipeModal = ({
 
         <Form.Item label='Name'>
           {getFieldDecorator('name', {
+            initialValue: '',
             rules: [
               {
                 required: true,
@@ -144,7 +147,9 @@ const AddRecipeModal = ({
         </Form.Item>
 
         <Form.Item label='Poster'>
-          {getFieldDecorator('poster')(
+          {getFieldDecorator('poster', {
+            initialValue: null,
+          })(
             <Upload
               beforeUpload={() => false}
               onChange={({ fileList }) => {
@@ -203,7 +208,9 @@ const AddRecipeModal = ({
         </Form.Item>
 
         <Form.Item label='Description'>
-          {getFieldDecorator('description')(<Input.TextArea rows={4} />)}
+          {getFieldDecorator('description', {
+            initialValue: '',
+          })(<Input.TextArea rows={4} />)}
         </Form.Item>
 
 
@@ -215,6 +222,7 @@ const AddRecipeModal = ({
             key={id}
           >
             {getFieldDecorator(`ingredient-${id}-name`, {
+              initialValue: '',
               rules: [
                 {
                   required: true,
@@ -225,6 +233,7 @@ const AddRecipeModal = ({
             })(<Input placeholder='Ingredient Name' />)}
 
             {getFieldDecorator(`ingredient-${id}-quantity`, {
+              initialValue: '',
               rules: [
                 {
                   required: true,
@@ -237,8 +246,10 @@ const AddRecipeModal = ({
                 type='number'
                 placeholder='Quantity'
                 addonAfter={
-                  getFieldDecorator(`ingredient-${id}-unit`)(
-                    <Select defaultValue='item'>
+                  getFieldDecorator(`ingredient-${id}-unit`, {
+                    initialValue: 'item',
+                  })(
+                    <Select>
                       <OriginalSelect.Option value='item'>item</OriginalSelect.Option>
                       <OriginalSelect.Option value='g'>g</OriginalSelect.Option>
                       <OriginalSelect.Option value='ml'>ml</OriginalSelect.Option>

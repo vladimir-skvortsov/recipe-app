@@ -14,11 +14,16 @@ type BatchPayload {
   count: Long!
 }
 
+scalar DateTime
+
 type Ingredient {
   id: ID!
+  recipe: Recipe!
   name: String!
   quantity: Float!
   unit: IngredientEnum!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type IngredientConnection {
@@ -29,14 +34,22 @@ type IngredientConnection {
 
 input IngredientCreateInput {
   id: ID
+  recipe: RecipeCreateOneWithoutIngredientsInput!
   name: String!
   quantity: Float!
   unit: IngredientEnum!
 }
 
-input IngredientCreateManyInput {
-  create: [IngredientCreateInput!]
+input IngredientCreateManyWithoutRecipeInput {
+  create: [IngredientCreateWithoutRecipeInput!]
   connect: [IngredientWhereUniqueInput!]
+}
+
+input IngredientCreateWithoutRecipeInput {
+  id: ID
+  name: String!
+  quantity: Float!
+  unit: IngredientEnum!
 }
 
 type IngredientEdge {
@@ -61,6 +74,10 @@ enum IngredientOrderByInput {
   quantity_DESC
   unit_ASC
   unit_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type IngredientPreviousValues {
@@ -68,6 +85,8 @@ type IngredientPreviousValues {
   name: String!
   quantity: Float!
   unit: IngredientEnum!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 input IngredientScalarWhereInput {
@@ -111,6 +130,22 @@ input IngredientScalarWhereInput {
   unit_not: IngredientEnum
   unit_in: [IngredientEnum!]
   unit_not_in: [IngredientEnum!]
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
   AND: [IngredientScalarWhereInput!]
   OR: [IngredientScalarWhereInput!]
   NOT: [IngredientScalarWhereInput!]
@@ -132,13 +167,8 @@ input IngredientSubscriptionWhereInput {
   AND: [IngredientSubscriptionWhereInput!]
 }
 
-input IngredientUpdateDataInput {
-  name: String
-  quantity: Float
-  unit: IngredientEnum
-}
-
 input IngredientUpdateInput {
+  recipe: RecipeUpdateOneRequiredWithoutIngredientsInput
   name: String
   quantity: Float
   unit: IngredientEnum
@@ -150,22 +180,22 @@ input IngredientUpdateManyDataInput {
   unit: IngredientEnum
 }
 
-input IngredientUpdateManyInput {
-  create: [IngredientCreateInput!]
-  update: [IngredientUpdateWithWhereUniqueNestedInput!]
-  upsert: [IngredientUpsertWithWhereUniqueNestedInput!]
-  delete: [IngredientWhereUniqueInput!]
-  connect: [IngredientWhereUniqueInput!]
-  set: [IngredientWhereUniqueInput!]
-  disconnect: [IngredientWhereUniqueInput!]
-  deleteMany: [IngredientScalarWhereInput!]
-  updateMany: [IngredientUpdateManyWithWhereNestedInput!]
-}
-
 input IngredientUpdateManyMutationInput {
   name: String
   quantity: Float
   unit: IngredientEnum
+}
+
+input IngredientUpdateManyWithoutRecipeInput {
+  create: [IngredientCreateWithoutRecipeInput!]
+  delete: [IngredientWhereUniqueInput!]
+  connect: [IngredientWhereUniqueInput!]
+  set: [IngredientWhereUniqueInput!]
+  disconnect: [IngredientWhereUniqueInput!]
+  update: [IngredientUpdateWithWhereUniqueWithoutRecipeInput!]
+  upsert: [IngredientUpsertWithWhereUniqueWithoutRecipeInput!]
+  deleteMany: [IngredientScalarWhereInput!]
+  updateMany: [IngredientUpdateManyWithWhereNestedInput!]
 }
 
 input IngredientUpdateManyWithWhereNestedInput {
@@ -173,15 +203,21 @@ input IngredientUpdateManyWithWhereNestedInput {
   data: IngredientUpdateManyDataInput!
 }
 
-input IngredientUpdateWithWhereUniqueNestedInput {
-  where: IngredientWhereUniqueInput!
-  data: IngredientUpdateDataInput!
+input IngredientUpdateWithoutRecipeDataInput {
+  name: String
+  quantity: Float
+  unit: IngredientEnum
 }
 
-input IngredientUpsertWithWhereUniqueNestedInput {
+input IngredientUpdateWithWhereUniqueWithoutRecipeInput {
   where: IngredientWhereUniqueInput!
-  update: IngredientUpdateDataInput!
-  create: IngredientCreateInput!
+  data: IngredientUpdateWithoutRecipeDataInput!
+}
+
+input IngredientUpsertWithWhereUniqueWithoutRecipeInput {
+  where: IngredientWhereUniqueInput!
+  update: IngredientUpdateWithoutRecipeDataInput!
+  create: IngredientCreateWithoutRecipeInput!
 }
 
 input IngredientWhereInput {
@@ -199,6 +235,7 @@ input IngredientWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  recipe: RecipeWhereInput
   name: String
   name_not: String
   name_in: [String!]
@@ -225,6 +262,22 @@ input IngredientWhereInput {
   unit_not: IngredientEnum
   unit_in: [IngredientEnum!]
   unit_not_in: [IngredientEnum!]
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
   AND: [IngredientWhereInput!]
 }
 
@@ -288,6 +341,8 @@ type Recipe {
   protein: Int
   carbohydrates: Int
   fat: Int
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type RecipeConnection {
@@ -306,7 +361,7 @@ input RecipeCreateInput {
   name: String!
   tags: RecipeCreatetagsInput
   description: String
-  ingredients: IngredientCreateManyInput
+  ingredients: IngredientCreateManyWithoutRecipeInput
   directions: RecipeCreatedirectionsInput
   calories: Int
   protein: Int
@@ -314,8 +369,26 @@ input RecipeCreateInput {
   fat: Int
 }
 
+input RecipeCreateOneWithoutIngredientsInput {
+  create: RecipeCreateWithoutIngredientsInput
+  connect: RecipeWhereUniqueInput
+}
+
 input RecipeCreatetagsInput {
   set: [String!]
+}
+
+input RecipeCreateWithoutIngredientsInput {
+  id: ID
+  poster: String
+  name: String!
+  tags: RecipeCreatetagsInput
+  description: String
+  directions: RecipeCreatedirectionsInput
+  calories: Int
+  protein: Int
+  carbohydrates: Int
+  fat: Int
 }
 
 type RecipeEdge {
@@ -340,6 +413,10 @@ enum RecipeOrderByInput {
   carbohydrates_DESC
   fat_ASC
   fat_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type RecipePreviousValues {
@@ -353,6 +430,8 @@ type RecipePreviousValues {
   protein: Int
   carbohydrates: Int
   fat: Int
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type RecipeSubscriptionPayload {
@@ -380,7 +459,7 @@ input RecipeUpdateInput {
   name: String
   tags: RecipeUpdatetagsInput
   description: String
-  ingredients: IngredientUpdateManyInput
+  ingredients: IngredientUpdateManyWithoutRecipeInput
   directions: RecipeUpdatedirectionsInput
   calories: Int
   protein: Int
@@ -400,8 +479,32 @@ input RecipeUpdateManyMutationInput {
   fat: Int
 }
 
+input RecipeUpdateOneRequiredWithoutIngredientsInput {
+  create: RecipeCreateWithoutIngredientsInput
+  update: RecipeUpdateWithoutIngredientsDataInput
+  upsert: RecipeUpsertWithoutIngredientsInput
+  connect: RecipeWhereUniqueInput
+}
+
 input RecipeUpdatetagsInput {
   set: [String!]
+}
+
+input RecipeUpdateWithoutIngredientsDataInput {
+  poster: String
+  name: String
+  tags: RecipeUpdatetagsInput
+  description: String
+  directions: RecipeUpdatedirectionsInput
+  calories: Int
+  protein: Int
+  carbohydrates: Int
+  fat: Int
+}
+
+input RecipeUpsertWithoutIngredientsInput {
+  update: RecipeUpdateWithoutIngredientsDataInput!
+  create: RecipeCreateWithoutIngredientsInput!
 }
 
 input RecipeWhereInput {
@@ -494,6 +597,22 @@ input RecipeWhereInput {
   fat_lte: Int
   fat_gt: Int
   fat_gte: Int
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
   AND: [RecipeWhereInput!]
 }
 

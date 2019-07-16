@@ -1,4 +1,7 @@
-const removeRecipe = (root, { id }, { database }) => database.deleteRecipe({ id })
+import { prisma } from '@server/utils/prisma/prisma'
+
+
+const removeRecipe = (root, { id }) => prisma.deleteRecipe({ id })
 
 
 export default removeRecipe

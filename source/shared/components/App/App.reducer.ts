@@ -1,18 +1,25 @@
 type Action =
-  | { type: 'toggleModal', name: string, open: boolean }
+  | { type: 'toggleAddRecipeModal' }
+  | { type: 'toggleRecipeModal', id: string | null }
 
 interface State {
-  modals: object
+  addRecipeModalOpen: boolean
+  recipeModalOpen: string | null
 }
 
 
-export const initialState = { modals: {} }
+export const initialState = {
+  addRecipeModalOpen: false,
+  recipeModalOpen: null,
+}
 
 
 const reducer = (state: State, action: Action) => {
   switch (action.type) {
-    case 'toggleModal':
-      return { ...state, modals: { ...state.modals, [action.name]: action.open } }
+    case 'toggleAddRecipeModal':
+      return { ...state, addRecipeModalOpen: !state.addRecipeModalOpen }
+    case 'toggleRecipeModal':
+      return { ...state, recipeModalOpen: action.id }
     default:
       throw new Error('Unexpected action.')
   }

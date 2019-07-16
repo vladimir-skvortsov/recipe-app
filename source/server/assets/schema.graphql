@@ -1,11 +1,34 @@
 scalar Upload
 
 
+enum IngredientEnum {
+  Item
+  G
+  Ml
+  Tsp
+  Tbsp
+}
+
+type Ingredient {
+  name: String!
+  quantity: Float!
+  unit: IngredientEnum!
+}
+
 type Recipe {
   id: ID!
   poster: Upload
   name: String!
   tags: [String!]!
+  description: String
+
+  ingredients: [Ingredient!]!
+  directions: [String!]!
+
+  calories: Int
+  protein: Int
+  carbohydrates: Int
+  fat: Int
 }
 
 type Query {
@@ -16,15 +39,7 @@ type Query {
 }
 
 
-enum IngredientEnum {
-  Item
-  G
-  Ml
-  Tsp
-  Tbsp
-}
-
-input Ingredient {
+input IngredientInput {
   name: String!
   quantity: Float!
   unit: IngredientEnum!
@@ -36,7 +51,7 @@ input AddUpdateRecipeProps {
   tags: [String!]!
   description: String
 
-  ingredients: [Ingredient!]!
+  ingredients: [IngredientInput!]!
   directions: [String!]!
 
   calories: Int

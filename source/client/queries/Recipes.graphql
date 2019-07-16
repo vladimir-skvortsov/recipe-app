@@ -1,0 +1,21 @@
+query Recipes {
+  recipes {
+    id
+    poster
+    name
+    tags
+    description
+
+    ingredients {
+      name
+      quantity
+      unit
+    }
+    directions
+
+    calories
+    protein
+    carbohydrates
+    fat
+  }
+}
