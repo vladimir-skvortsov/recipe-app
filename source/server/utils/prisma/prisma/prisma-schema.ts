@@ -332,6 +332,7 @@ type Query {
 type Recipe {
   id: ID!
   poster: String
+  posterKey: String
   name: String!
   tags: [String!]!
   description: String
@@ -358,6 +359,7 @@ input RecipeCreatedirectionsInput {
 input RecipeCreateInput {
   id: ID
   poster: String
+  posterKey: String
   name: String!
   tags: RecipeCreatetagsInput
   description: String
@@ -381,6 +383,7 @@ input RecipeCreatetagsInput {
 input RecipeCreateWithoutIngredientsInput {
   id: ID
   poster: String
+  posterKey: String
   name: String!
   tags: RecipeCreatetagsInput
   description: String
@@ -401,6 +404,8 @@ enum RecipeOrderByInput {
   id_DESC
   poster_ASC
   poster_DESC
+  posterKey_ASC
+  posterKey_DESC
   name_ASC
   name_DESC
   description_ASC
@@ -422,6 +427,7 @@ enum RecipeOrderByInput {
 type RecipePreviousValues {
   id: ID!
   poster: String
+  posterKey: String
   name: String!
   tags: [String!]!
   description: String
@@ -456,6 +462,7 @@ input RecipeUpdatedirectionsInput {
 
 input RecipeUpdateInput {
   poster: String
+  posterKey: String
   name: String
   tags: RecipeUpdatetagsInput
   description: String
@@ -469,6 +476,7 @@ input RecipeUpdateInput {
 
 input RecipeUpdateManyMutationInput {
   poster: String
+  posterKey: String
   name: String
   tags: RecipeUpdatetagsInput
   description: String
@@ -492,6 +500,7 @@ input RecipeUpdatetagsInput {
 
 input RecipeUpdateWithoutIngredientsDataInput {
   poster: String
+  posterKey: String
   name: String
   tags: RecipeUpdatetagsInput
   description: String
@@ -536,6 +545,20 @@ input RecipeWhereInput {
   poster_not_starts_with: String
   poster_ends_with: String
   poster_not_ends_with: String
+  posterKey: String
+  posterKey_not: String
+  posterKey_in: [String!]
+  posterKey_not_in: [String!]
+  posterKey_lt: String
+  posterKey_lte: String
+  posterKey_gt: String
+  posterKey_gte: String
+  posterKey_contains: String
+  posterKey_not_contains: String
+  posterKey_starts_with: String
+  posterKey_not_starts_with: String
+  posterKey_ends_with: String
+  posterKey_not_ends_with: String
   name: String
   name_not: String
   name_in: [String!]

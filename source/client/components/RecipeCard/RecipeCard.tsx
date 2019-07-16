@@ -1,10 +1,10 @@
 import React from 'react'
-import { Card, Tag } from 'antd'
+import { Tag, Card as OriginalCard } from 'antd'
 import { FaImage } from 'react-icons/fa'
 
 import Recipe from '@client/types/Recipe'
 
-import { Poster, PosterPlaceholder, TagsContainer } from './RecipeCard.styles'
+import { Card, Poster, PosterPlaceholder, TagsContainer } from './RecipeCard.styles'
 
 
 export interface Props extends Omit<Recipe, 'description' | 'directions' | 'ingredients'> {
@@ -38,9 +38,9 @@ const RecipeCard = ({
     }
     onClick={() => toggleRecipeModal(id)}
   >
-    <Card.Meta
+    <OriginalCard.Meta
       title={name}
-      description={`${calories} kcal • ${carbohydrates} g Carbohydrates • ${protein} g Protein • ${fat} g Fat`}
+      description={`${calories || '-'} kcal • ${carbohydrates || '-'} g Carbohydrates • ${protein || '-'} g Protein • ${fat || '-'} g Fat`}
     />
     <TagsContainer>
       {tags.map((name, index) => <Tag key={index}>{name}</Tag>)}

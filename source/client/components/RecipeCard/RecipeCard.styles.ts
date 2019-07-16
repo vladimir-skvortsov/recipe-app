@@ -1,5 +1,11 @@
 import styled from 'styled-components'
 
+import { Card as OriginalCard } from 'antd'
+
+
+export const Card = styled(OriginalCard)`
+  margin-bottom: 20px !important;
+`
 
 export const Poster = styled.img`
   object-fit: cover;

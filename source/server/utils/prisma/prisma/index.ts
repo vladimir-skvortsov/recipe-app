@@ -161,6 +161,8 @@ export type RecipeOrderByInput =
   | "id_DESC"
   | "poster_ASC"
   | "poster_DESC"
+  | "posterKey_ASC"
+  | "posterKey_DESC"
   | "name_ASC"
   | "name_DESC"
   | "description_ASC"
@@ -224,6 +226,20 @@ export interface RecipeWhereInput {
   poster_not_starts_with?: Maybe<String>;
   poster_ends_with?: Maybe<String>;
   poster_not_ends_with?: Maybe<String>;
+  posterKey?: Maybe<String>;
+  posterKey_not?: Maybe<String>;
+  posterKey_in?: Maybe<String[] | String>;
+  posterKey_not_in?: Maybe<String[] | String>;
+  posterKey_lt?: Maybe<String>;
+  posterKey_lte?: Maybe<String>;
+  posterKey_gt?: Maybe<String>;
+  posterKey_gte?: Maybe<String>;
+  posterKey_contains?: Maybe<String>;
+  posterKey_not_contains?: Maybe<String>;
+  posterKey_starts_with?: Maybe<String>;
+  posterKey_not_starts_with?: Maybe<String>;
+  posterKey_ends_with?: Maybe<String>;
+  posterKey_not_ends_with?: Maybe<String>;
   name?: Maybe<String>;
   name_not?: Maybe<String>;
   name_in?: Maybe<String[] | String>;
@@ -307,6 +323,7 @@ export interface RecipeWhereInput {
 export interface RecipeCreateInput {
   id?: Maybe<ID_Input>;
   poster?: Maybe<String>;
+  posterKey?: Maybe<String>;
   name: String;
   tags?: Maybe<RecipeCreatetagsInput>;
   description?: Maybe<String>;
@@ -346,6 +363,7 @@ export interface RecipeCreateOneWithoutIngredientsInput {
 
 export interface RecipeUpdateManyMutationInput {
   poster?: Maybe<String>;
+  posterKey?: Maybe<String>;
   name?: Maybe<String>;
   tags?: Maybe<RecipeUpdatetagsInput>;
   description?: Maybe<String>;
@@ -359,6 +377,7 @@ export interface RecipeUpdateManyMutationInput {
 export interface RecipeCreateWithoutIngredientsInput {
   id?: Maybe<ID_Input>;
   poster?: Maybe<String>;
+  posterKey?: Maybe<String>;
   name: String;
   tags?: Maybe<RecipeCreatetagsInput>;
   description?: Maybe<String>;
@@ -394,6 +413,7 @@ export interface IngredientUpdateWithoutRecipeDataInput {
 
 export interface RecipeUpdateInput {
   poster?: Maybe<String>;
+  posterKey?: Maybe<String>;
   name?: Maybe<String>;
   tags?: Maybe<RecipeUpdatetagsInput>;
   description?: Maybe<String>;
@@ -448,6 +468,7 @@ export interface IngredientSubscriptionWhereInput {
 
 export interface RecipeUpdateWithoutIngredientsDataInput {
   poster?: Maybe<String>;
+  posterKey?: Maybe<String>;
   name?: Maybe<String>;
   tags?: Maybe<RecipeUpdatetagsInput>;
   description?: Maybe<String>;
@@ -630,6 +651,7 @@ export interface NodeNode {
 export interface RecipePreviousValues {
   id: ID_Output;
   poster?: String;
+  posterKey?: String;
   name: String;
   tags: String[];
   description?: String;
@@ -647,6 +669,7 @@ export interface RecipePreviousValuesPromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   poster: () => Promise<String>;
+  posterKey: () => Promise<String>;
   name: () => Promise<String>;
   tags: () => Promise<String[]>;
   description: () => Promise<String>;
@@ -664,6 +687,7 @@ export interface RecipePreviousValuesSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   poster: () => Promise<AsyncIterator<String>>;
+  posterKey: () => Promise<AsyncIterator<String>>;
   name: () => Promise<AsyncIterator<String>>;
   tags: () => Promise<AsyncIterator<String[]>>;
   description: () => Promise<AsyncIterator<String>>;
@@ -721,6 +745,7 @@ export interface IngredientConnectionSubscription
 export interface Recipe {
   id: ID_Output;
   poster?: String;
+  posterKey?: String;
   name: String;
   tags: String[];
   description?: String;
@@ -736,6 +761,7 @@ export interface Recipe {
 export interface RecipePromise extends Promise<Recipe>, Fragmentable {
   id: () => Promise<ID_Output>;
   poster: () => Promise<String>;
+  posterKey: () => Promise<String>;
   name: () => Promise<String>;
   tags: () => Promise<String[]>;
   description: () => Promise<String>;
@@ -762,6 +788,7 @@ export interface RecipeSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   poster: () => Promise<AsyncIterator<String>>;
+  posterKey: () => Promise<AsyncIterator<String>>;
   name: () => Promise<AsyncIterator<String>>;
   tags: () => Promise<AsyncIterator<String[]>>;
   description: () => Promise<AsyncIterator<String>>;
@@ -788,6 +815,7 @@ export interface RecipeNullablePromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   poster: () => Promise<String>;
+  posterKey: () => Promise<String>;
   name: () => Promise<String>;
   tags: () => Promise<String[]>;
   description: () => Promise<String>;

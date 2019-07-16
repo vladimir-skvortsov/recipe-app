@@ -19,7 +19,7 @@ const Home = ({ recipes, toggleRecipeModal }: Props) =>
   <>
     <Meta title='Home' />
 
-    <Row>
+    <Row gutter={20}>
       {recipes.map(props => (
         <Col key={props.id} sm={12} md={10} lg={8} xl={6} xxl={4}>
           <RecipeCard {...props} toggleRecipeModal={toggleRecipeModal} />

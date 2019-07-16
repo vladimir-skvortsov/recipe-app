@@ -75,7 +75,7 @@ const RecipeModal = ({
       <Typography.Title level={2}>{name}</Typography.Title>
 
       <Typography.Text type='secondary'>
-        {calories} kcal • {carbohydrates} g Carbohydrates • {protein} g Protein • {fat} g Fat
+        {calories || '-'} kcal • {carbohydrates || '-'} g Carbohydrates • {protein || '-'} g Protein • {fat || '-'} g Fat
       </Typography.Text>
 
       <TagsContainer>
