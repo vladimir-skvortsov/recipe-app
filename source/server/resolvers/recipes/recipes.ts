@@ -6,7 +6,12 @@ const recipes = async () => {
     {
       recipes {
         id
-        poster
+        poster {
+          filename
+          mimetype
+          location
+          key
+        }
         name
         tags
         description

@@ -17,10 +17,18 @@ type Ingredient {
   updatedAt: DateTime! @updatedAt
 }
 
+type Poster {
+  id: ID! @id
+  filename: String!
+  mimetype: String!
+  location: String!
+  key: String!
+  recipe: Recipe! @relation(name: "PosterByRecipe")
+}
+
 type Recipe {
   id: ID! @id
-  poster: String
-  posterKey: String
+  poster: Poster @relation(name: "PosterByRecipe", link: TABLE, onDelete: CASCADE)
   name: String!
   tags: [String!]! @scalarList(strategy: RELATION)
   description: String

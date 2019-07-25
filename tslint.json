@@ -60,7 +60,8 @@
     "object-literal-sort-keys": false,
     "member-access": [true, "no-public"],
     "no-console": false,
-    "object-shorthand-properties-first": false
+    "object-shorthand-properties-first": false,
+    "prefer-array-literal": false
   },
   "rulesDirectory": []
 }

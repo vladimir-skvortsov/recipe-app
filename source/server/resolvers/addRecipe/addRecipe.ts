@@ -22,14 +22,23 @@ const addRecipe = async (root, { props }) => {
   })
 
   if (props.poster) {
-    const { createReadStream, mimetype } = await props.poster
+    const { filename, mimetype, createReadStream } = await props.poster
     const stream = createReadStream()
     const posterBuffer = await streamToBuffer(stream)
     const minifiedPoster = await minifyImage(posterBuffer)
     const { Location, Key } = await upload(`recipePosters/${recipe.id}.${getExtension(mimetype)}`, minifiedPoster)
 
     const recipeWithPoster = await prisma.updateRecipe({
-      data: { poster: Location, posterKey: Key },
+      data: {
+        poster: {
+          create: {
+            filename,
+            mimetype,
+            location: Location,
+            key: Key,
+          },
+        },
+      },
       where: { id: recipe.id },
     })
 

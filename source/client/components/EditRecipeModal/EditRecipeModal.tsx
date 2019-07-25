@@ -13,54 +13,51 @@ import {
   Select as OriginalSelect,
   message,
 } from 'antd'
+import { UploadFileStatus } from 'antd/lib/upload/interface'
 import { FormComponentProps } from 'antd/lib/form'
 import { FaUpload, FaPlus } from 'react-icons/fa'
 import { flow, capitalize } from 'lodash'
 import gql from 'graphql-tag'
 import { graphql } from 'react-apollo'
 
-import AddRecipeMutation from '@client/queries/AddRecipe.graphql'
+import Recipe from '@client/types/Recipe'
 
-import { Select } from './AddRecipeModal.styles'
+import UpdateRecipeMutation from '@client/queries/UpdateRecipe.graphql'
 
-import reducer, { initialState } from './AddRecipeModal.reducer'
+import { Select } from './EditRecipeModal.styles'
+
+import reducer, { initialState } from './EditRecipeModal.reducer'
 
 
-interface Ingredient {
-  unit: string
-  name: string
+interface UpdateRecipeResponse {
+  updateRecipe: {
+    id: string,
+  }
 }
 
-interface RecipeProps {
-  poster?: string
-  name: string
-  tags: string[]
-  description: string
+type UpdateRecipeProps = Omit<Recipe, 'id'>
 
-
-  directions: string[]
-  ingredients: Ingredient[]
-
-  calories: number
-  protein: number
-  carbohydrates: number
-  fat: number
+interface UpdateRecipeVariables {
+  id: string
+  props: UpdateRecipeProps
 }
 
 export interface Props extends FormComponentProps {
   visible: boolean
+  recipe: Recipe
 
-  closeRecipeModal: () => any
-  addRecipe: (props: RecipeProps) => any
+  closeEditRecipeModal: () => any
+  updateRecipe: (id: string, props: UpdateRecipeProps) => any
   refetchRecipes: () => any
 }
 
 
-const AddRecipeModal = ({
+const EditRecipeModal = ({
   visible,
+  recipe,
 
-  closeRecipeModal,
-  addRecipe,
+  closeEditRecipeModal,
+  updateRecipe,
   refetchRecipes,
   form: { getFieldDecorator, validateFields, resetFields },
 }: Props) => {
@@ -96,23 +93,26 @@ const AddRecipeModal = ({
 
 
       try {
-        await addRecipe({
-          poster: posterFile,
-          name: values.name,
-          tags: state.tags,
-          description: values.description,
+        await updateRecipe(
+          recipe.id,
+          {
+            poster: posterFile,
+            name: values.name,
+            tags: state.tags,
+            description: values.description,
 
-          ingredients,
-          directions,
+            ingredients,
+            directions,
 
-          calories: Number(values.calories),
-          protein: Number(values.protein),
-          carbohydrates: Number(values.carbohydrates),
-          fat: Number(values.fat),
-        })
+            calories: Number(values.calories),
+            protein: Number(values.protein),
+            carbohydrates: Number(values.carbohydrates),
+            fat: Number(values.fat),
+          },
+        )
 
-        message.success('The recipe was added!')
-        closeRecipeModal()
+        message.success('The recipe was updated!')
+        closeEditRecipeModal()
         refetchRecipes()
 
         resetFields()
@@ -124,12 +124,36 @@ const AddRecipeModal = ({
   }
 
 
+  if (!recipe) return null
+
+
+  const {
+    poster,
+    name,
+    tags,
+    description,
+
+    ingredients,
+    directions,
+
+    calories,
+    protein,
+    carbohydrates,
+    fat,
+  } = recipe
+
+
+  if (!state.tags.length && tags.length) dispatch({ type: 'setTags', tags })
+  if (!state.ingredients.length && ingredients.length) dispatch({ type: 'setIngredients', length: ingredients.length })
+  if (!state.directions.length && directions.length) dispatch({ type: 'setDirections', length: directions.length })
+
+
   return (
     <Modal
-      title='Add Recipe'
+      title={`Edit ${name} Recipe`}
       visible={visible}
-      onCancel={closeRecipeModal}
-      okText='Add'
+      onCancel={closeEditRecipeModal}
+      okText='Save'
       onOk={submitForm}
     >
       <Form onSubmit={submitForm}>
@@ -137,7 +161,7 @@ const AddRecipeModal = ({
 
         <Form.Item label='Name'>
           {getFieldDecorator('name', {
-            initialValue: '',
+            initialValue: name,
             rules: [
               {
                 required: true,
@@ -149,10 +173,18 @@ const AddRecipeModal = ({
         </Form.Item>
 
         <Form.Item label='Poster'>
-          {getFieldDecorator('poster', {
-            initialValue: null,
-          })(
+          {getFieldDecorator('poster')(
             <Upload
+              defaultFileList={[
+                {
+                  uid: '1',
+                  name: poster.filename,
+                  status: 'done' as UploadFileStatus,
+                  url: poster.location,
+                  size: 0,
+                  type: poster.mimetype,
+                },
+              ]}
               beforeUpload={() => false}
               onChange={({ fileList }) => {
                 if (fileList.length > 1) fileList.shift()
@@ -173,7 +205,7 @@ const AddRecipeModal = ({
         </Form.Item>
 
         <Form.Item label='Tags'>
-          {state.tags.map((tag, index) => {
+          {state.tags.map(tag => {
             const isLongTag = tag.length > 20
 
             const tagElem =
@@ -211,7 +243,7 @@ const AddRecipeModal = ({
 
         <Form.Item label='Description'>
           {getFieldDecorator('description', {
-            initialValue: '',
+            initialValue: description,
           })(<Input.TextArea rows={4} />)}
         </Form.Item>
 
@@ -224,7 +256,7 @@ const AddRecipeModal = ({
             key={id}
           >
             {getFieldDecorator(`ingredient-${id}-name`, {
-              initialValue: '',
+              initialValue: ingredients[id] ? ingredients[id].name : '',
               rules: [
                 {
                   required: true,
@@ -235,7 +267,7 @@ const AddRecipeModal = ({
             })(<Input placeholder='Ingredient Name' />)}
 
             {getFieldDecorator(`ingredient-${id}-quantity`, {
-              initialValue: '',
+              initialValue: ingredients[id] ? String(ingredients[id].quantity) : '',
               rules: [
                 {
                   required: true,
@@ -249,7 +281,7 @@ const AddRecipeModal = ({
                 placeholder='Quantity'
                 addonAfter={
                   getFieldDecorator(`ingredient-${id}-unit`, {
-                    initialValue: 'item',
+                    initialValue: ingredients[id] ? ingredients[id].unit : 'item',
                   })(
                     <Select>
                       <OriginalSelect.Option value='item'>item</OriginalSelect.Option>
@@ -299,6 +331,7 @@ const AddRecipeModal = ({
             key={id}
           >
             {getFieldDecorator(`direction-${id}-name`, {
+              initialValue: directions[id] || '',
               rules: [
                 {
                   required: true,
@@ -340,19 +373,27 @@ const AddRecipeModal = ({
         <Divider>Facts</Divider>
 
         <Form.Item label='Calories'>
-          {getFieldDecorator('calories')(<Input type='number' addonAfter='kcal' min={0} />)}
+          {getFieldDecorator('calories', {
+            initialValue: calories,
+          })(<Input type='number' addonAfter='kcal' min={0} />)}
         </Form.Item>
 
         <Form.Item label='Protein'>
-          {getFieldDecorator('protein')(<Input type='number' addonAfter='g' min={0} />)}
+          {getFieldDecorator('protein', {
+            initialValue: protein,
+          })(<Input type='number' addonAfter='g' min={0} />)}
         </Form.Item>
 
         <Form.Item label='Carbohydrates'>
-          {getFieldDecorator('carbohydrates')(<Input type='number' addonAfter='g' min={0} />)}
+          {getFieldDecorator('carbohydrates', {
+            initialValue: carbohydrates,
+          })(<Input type='number' addonAfter='g' min={0} />)}
         </Form.Item>
 
         <Form.Item label='Fat'>
-          {getFieldDecorator('fat')(<Input type='number' addonAfter='g' min={0} />)}
+          {getFieldDecorator('fat', {
+            initialValue: fat,
+          })(<Input type='number' addonAfter='g' min={0} />)}
         </Form.Item>
       </Form>
     </Modal>
@@ -362,9 +403,9 @@ const AddRecipeModal = ({
 
 export default flow([
   Form.create(),
-  graphql(gql(AddRecipeMutation), {
+  graphql<any, UpdateRecipeResponse, UpdateRecipeVariables, any>(gql(UpdateRecipeMutation), {
     props: ({ mutate }) => ({
-      addRecipe: (props: RecipeProps) => mutate({ variables: { props } }),
+      updateRecipe: (id, props) => mutate({ variables: { id, props } }),
     }),
   }),
-])(AddRecipeModal)
+])(EditRecipeModal)

@@ -18,6 +18,7 @@ import GlobalStyle from '@client/components/GlobalStyle/GlobalStyle'
 import Header from '@client/components/Header/Header'
 import Footer from '@client/components/Footer/Footer'
 import AddRecipeModal from '@client/components/AddRecipeModal/AddRecipeModal'
+import EditRecipeModal from '@client/components/EditRecipeModal/EditRecipeModal'
 import RecipeModal from '@client/components/RecipeModal/RecipeModal'
 import {
   Home,
@@ -51,9 +52,17 @@ const App = ({
     <ErrorBoundary>
       <GlobalStyle />
 
+
       <AddRecipeModal
         visible={state.addRecipeModalOpen}
         closeRecipeModal={() => dispatch({ type: 'toggleAddRecipeModal' })}
+        refetchRecipes={refetchRecipes}
+      />
+
+      <EditRecipeModal
+        visible={Boolean(state.editRecipeModalOpen)}
+        closeEditRecipeModal={() => dispatch({ type: 'toggleEditRecipeModal', id: null })}
+        recipe={recipes.find(({ id }) => id === state.editRecipeModalOpen)}
         refetchRecipes={refetchRecipes}
       />
 
@@ -62,7 +71,9 @@ const App = ({
         closeRecipeModal={() => dispatch({ type: 'toggleRecipeModal', id: null })}
         recipe={recipes.find(({ id }) => id === state.recipeModalOpen)}
         refetchRecipes={refetchRecipes}
+        openEditRecipeModal={id => dispatch({ type: 'toggleEditRecipeModal', id })}
       />
+
 
       <Layout>
         <Header openRecipeModal={() => dispatch({ type: 'toggleAddRecipeModal' })} />

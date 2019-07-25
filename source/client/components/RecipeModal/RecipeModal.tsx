@@ -1,5 +1,5 @@
 import React from 'react'
-import { Modal, Typography, Tag, Divider, Button } from 'antd'
+import { Modal, Typography, Tag, Divider, Button, Row, Col, message } from 'antd'
 import { FaImage } from 'react-icons/fa'
 import gql from 'graphql-tag'
 import { graphql } from 'react-apollo'
@@ -26,6 +26,7 @@ export interface Props {
   closeRecipeModal: () => any
   removeRecipe: (id: string) => any
   refetchRecipes: () => any
+  openEditRecipeModal: (id: string) => any
 }
 
 
@@ -36,6 +37,7 @@ const RecipeModal = ({
   closeRecipeModal,
   removeRecipe,
   refetchRecipes,
+  openEditRecipeModal,
 }: Props) => {
   if (!recipe) return null
 
@@ -58,13 +60,13 @@ const RecipeModal = ({
 
   return  (
     <Modal
-      title={name}
+      title={`${name} Recipe`}
       visible={visible}
       onCancel={closeRecipeModal}
     >
       {
         poster
-          ? <Poster alt='' src={poster} />
+          ? <Poster alt='' src={poster.location} />
           : (
             <PosterPlaceholder>
               <FaImage size={20} />
@@ -106,17 +108,34 @@ const RecipeModal = ({
         {directions.map((direction, index) => <li key={index}>{direction}</li>)}
       </ul>
 
-      <Button
-        type='danger'
-        block
-        onClick={async () => {
-          await removeRecipe(id)
-          refetchRecipes()
-          closeRecipeModal()
-        }}
-      >
-        Remove Recipe
-      </Button>
+      <Row gutter={20}>
+        <Col md={12}>
+          <Button
+            block
+            onClick={async () => {
+              closeRecipeModal()
+              openEditRecipeModal(id)
+            }}
+          >
+            Edit Recipe
+          </Button>
+        </Col>
+
+        <Col md={12}>
+          <Button
+            type='danger'
+            block
+            onClick={async () => {
+              await removeRecipe(id)
+              message.success('The recipe was removed!')
+              refetchRecipes()
+              closeRecipeModal()
+            }}
+          >
+            Remove Recipe
+          </Button>
+        </Col>
+      </Row>
     </Modal>
   )
 }

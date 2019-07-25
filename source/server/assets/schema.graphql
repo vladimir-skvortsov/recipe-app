@@ -15,9 +15,16 @@ type Ingredient {
   unit: IngredientEnum!
 }
 
+type Poster {
+  filename: String!
+  mimetype: String!
+  location: String!
+  key: String!
+}
+
 type Recipe {
   id: ID!
-  poster: Upload
+  poster: Poster
   name: String!
   tags: [String!]!
   description: String

@@ -4,9 +4,16 @@ interface Ingredient {
   name: string
 }
 
+interface Poster {
+  filename: string
+  mimetype: string
+  location: string
+  key: string
+}
+
 export default interface Recipe {
   id: string
-  poster?: string
+  poster?: Poster
   name: string
   tags: string[]
   description: string

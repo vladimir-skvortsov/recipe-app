@@ -29,7 +29,7 @@ const RecipeCard = ({
     hoverable
     cover={
       poster
-        ? <Poster alt='' src={poster} />
+        ? <Poster alt='' src={poster.location} />
         : (
           <PosterPlaceholder>
             <FaImage size={20} />

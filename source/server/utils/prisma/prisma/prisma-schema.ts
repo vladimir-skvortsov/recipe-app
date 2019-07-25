@@ -6,6 +6,10 @@ export const typeDefs = /* GraphQL */ `type AggregateIngredient {
   count: Int!
 }
 
+type AggregatePoster {
+  count: Int!
+}
+
 type AggregateRecipe {
   count: Int!
 }
@@ -294,6 +298,12 @@ type Mutation {
   upsertIngredient(where: IngredientWhereUniqueInput!, create: IngredientCreateInput!, update: IngredientUpdateInput!): Ingredient!
   deleteIngredient(where: IngredientWhereUniqueInput!): Ingredient
   deleteManyIngredients(where: IngredientWhereInput): BatchPayload!
+  createPoster(data: PosterCreateInput!): Poster!
+  updatePoster(data: PosterUpdateInput!, where: PosterWhereUniqueInput!): Poster
+  updateManyPosters(data: PosterUpdateManyMutationInput!, where: PosterWhereInput): BatchPayload!
+  upsertPoster(where: PosterWhereUniqueInput!, create: PosterCreateInput!, update: PosterUpdateInput!): Poster!
+  deletePoster(where: PosterWhereUniqueInput!): Poster
+  deleteManyPosters(where: PosterWhereInput): BatchPayload!
   createRecipe(data: RecipeCreateInput!): Recipe!
   updateRecipe(data: RecipeUpdateInput!, where: RecipeWhereUniqueInput!): Recipe
   updateManyRecipes(data: RecipeUpdateManyMutationInput!, where: RecipeWhereInput): BatchPayload!
@@ -319,10 +329,207 @@ type PageInfo {
   endCursor: String
 }
 
+type Poster {
+  id: ID!
+  filename: String!
+  mimetype: String!
+  location: String!
+  key: String!
+  recipe: Recipe!
+}
+
+type PosterConnection {
+  pageInfo: PageInfo!
+  edges: [PosterEdge]!
+  aggregate: AggregatePoster!
+}
+
+input PosterCreateInput {
+  id: ID
+  filename: String!
+  mimetype: String!
+  location: String!
+  key: String!
+  recipe: RecipeCreateOneWithoutPosterInput!
+}
+
+input PosterCreateOneWithoutRecipeInput {
+  create: PosterCreateWithoutRecipeInput
+  connect: PosterWhereUniqueInput
+}
+
+input PosterCreateWithoutRecipeInput {
+  id: ID
+  filename: String!
+  mimetype: String!
+  location: String!
+  key: String!
+}
+
+type PosterEdge {
+  node: Poster!
+  cursor: String!
+}
+
+enum PosterOrderByInput {
+  id_ASC
+  id_DESC
+  filename_ASC
+  filename_DESC
+  mimetype_ASC
+  mimetype_DESC
+  location_ASC
+  location_DESC
+  key_ASC
+  key_DESC
+}
+
+type PosterPreviousValues {
+  id: ID!
+  filename: String!
+  mimetype: String!
+  location: String!
+  key: String!
+}
+
+type PosterSubscriptionPayload {
+  mutation: MutationType!
+  node: Poster
+  updatedFields: [String!]
+  previousValues: PosterPreviousValues
+}
+
+input PosterSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: PosterWhereInput
+  AND: [PosterSubscriptionWhereInput!]
+}
+
+input PosterUpdateInput {
+  filename: String
+  mimetype: String
+  location: String
+  key: String
+  recipe: RecipeUpdateOneRequiredWithoutPosterInput
+}
+
+input PosterUpdateManyMutationInput {
+  filename: String
+  mimetype: String
+  location: String
+  key: String
+}
+
+input PosterUpdateOneWithoutRecipeInput {
+  create: PosterCreateWithoutRecipeInput
+  update: PosterUpdateWithoutRecipeDataInput
+  upsert: PosterUpsertWithoutRecipeInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: PosterWhereUniqueInput
+}
+
+input PosterUpdateWithoutRecipeDataInput {
+  filename: String
+  mimetype: String
+  location: String
+  key: String
+}
+
+input PosterUpsertWithoutRecipeInput {
+  update: PosterUpdateWithoutRecipeDataInput!
+  create: PosterCreateWithoutRecipeInput!
+}
+
+input PosterWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  filename: String
+  filename_not: String
+  filename_in: [String!]
+  filename_not_in: [String!]
+  filename_lt: String
+  filename_lte: String
+  filename_gt: String
+  filename_gte: String
+  filename_contains: String
+  filename_not_contains: String
+  filename_starts_with: String
+  filename_not_starts_with: String
+  filename_ends_with: String
+  filename_not_ends_with: String
+  mimetype: String
+  mimetype_not: String
+  mimetype_in: [String!]
+  mimetype_not_in: [String!]
+  mimetype_lt: String
+  mimetype_lte: String
+  mimetype_gt: String
+  mimetype_gte: String
+  mimetype_contains: String
+  mimetype_not_contains: String
+  mimetype_starts_with: String
+  mimetype_not_starts_with: String
+  mimetype_ends_with: String
+  mimetype_not_ends_with: String
+  location: String
+  location_not: String
+  location_in: [String!]
+  location_not_in: [String!]
+  location_lt: String
+  location_lte: String
+  location_gt: String
+  location_gte: String
+  location_contains: String
+  location_not_contains: String
+  location_starts_with: String
+  location_not_starts_with: String
+  location_ends_with: String
+  location_not_ends_with: String
+  key: String
+  key_not: String
+  key_in: [String!]
+  key_not_in: [String!]
+  key_lt: String
+  key_lte: String
+  key_gt: String
+  key_gte: String
+  key_contains: String
+  key_not_contains: String
+  key_starts_with: String
+  key_not_starts_with: String
+  key_ends_with: String
+  key_not_ends_with: String
+  recipe: RecipeWhereInput
+  AND: [PosterWhereInput!]
+}
+
+input PosterWhereUniqueInput {
+  id: ID
+}
+
 type Query {
   ingredient(where: IngredientWhereUniqueInput!): Ingredient
   ingredients(where: IngredientWhereInput, orderBy: IngredientOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Ingredient]!
   ingredientsConnection(where: IngredientWhereInput, orderBy: IngredientOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): IngredientConnection!
+  poster(where: PosterWhereUniqueInput!): Poster
+  posters(where: PosterWhereInput, orderBy: PosterOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Poster]!
+  postersConnection(where: PosterWhereInput, orderBy: PosterOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PosterConnection!
   recipe(where: RecipeWhereUniqueInput!): Recipe
   recipes(where: RecipeWhereInput, orderBy: RecipeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Recipe]!
   recipesConnection(where: RecipeWhereInput, orderBy: RecipeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RecipeConnection!
@@ -331,8 +538,7 @@ type Query {
 
 type Recipe {
   id: ID!
-  poster: String
-  posterKey: String
+  poster: Poster
   name: String!
   tags: [String!]!
   description: String
@@ -358,8 +564,7 @@ input RecipeCreatedirectionsInput {
 
 input RecipeCreateInput {
   id: ID
-  poster: String
-  posterKey: String
+  poster: PosterCreateOneWithoutRecipeInput
   name: String!
   tags: RecipeCreatetagsInput
   description: String
@@ -376,17 +581,34 @@ input RecipeCreateOneWithoutIngredientsInput {
   connect: RecipeWhereUniqueInput
 }
 
+input RecipeCreateOneWithoutPosterInput {
+  create: RecipeCreateWithoutPosterInput
+  connect: RecipeWhereUniqueInput
+}
+
 input RecipeCreatetagsInput {
   set: [String!]
 }
 
 input RecipeCreateWithoutIngredientsInput {
   id: ID
-  poster: String
-  posterKey: String
+  poster: PosterCreateOneWithoutRecipeInput
   name: String!
   tags: RecipeCreatetagsInput
   description: String
+  directions: RecipeCreatedirectionsInput
+  calories: Int
+  protein: Int
+  carbohydrates: Int
+  fat: Int
+}
+
+input RecipeCreateWithoutPosterInput {
+  id: ID
+  name: String!
+  tags: RecipeCreatetagsInput
+  description: String
+  ingredients: IngredientCreateManyWithoutRecipeInput
   directions: RecipeCreatedirectionsInput
   calories: Int
   protein: Int
@@ -402,10 +624,6 @@ type RecipeEdge {
 enum RecipeOrderByInput {
   id_ASC
   id_DESC
-  poster_ASC
-  poster_DESC
-  posterKey_ASC
-  posterKey_DESC
   name_ASC
   name_DESC
   description_ASC
@@ -426,8 +644,6 @@ enum RecipeOrderByInput {
 
 type RecipePreviousValues {
   id: ID!
-  poster: String
-  posterKey: String
   name: String!
   tags: [String!]!
   description: String
@@ -461,8 +677,7 @@ input RecipeUpdatedirectionsInput {
 }
 
 input RecipeUpdateInput {
-  poster: String
-  posterKey: String
+  poster: PosterUpdateOneWithoutRecipeInput
   name: String
   tags: RecipeUpdatetagsInput
   description: String
@@ -475,8 +690,6 @@ input RecipeUpdateInput {
 }
 
 input RecipeUpdateManyMutationInput {
-  poster: String
-  posterKey: String
   name: String
   tags: RecipeUpdatetagsInput
   description: String
@@ -494,13 +707,19 @@ input RecipeUpdateOneRequiredWithoutIngredientsInput {
   connect: RecipeWhereUniqueInput
 }
 
+input RecipeUpdateOneRequiredWithoutPosterInput {
+  create: RecipeCreateWithoutPosterInput
+  update: RecipeUpdateWithoutPosterDataInput
+  upsert: RecipeUpsertWithoutPosterInput
+  connect: RecipeWhereUniqueInput
+}
+
 input RecipeUpdatetagsInput {
   set: [String!]
 }
 
 input RecipeUpdateWithoutIngredientsDataInput {
-  poster: String
-  posterKey: String
+  poster: PosterUpdateOneWithoutRecipeInput
   name: String
   tags: RecipeUpdatetagsInput
   description: String
@@ -511,9 +730,26 @@ input RecipeUpdateWithoutIngredientsDataInput {
   fat: Int
 }
 
+input RecipeUpdateWithoutPosterDataInput {
+  name: String
+  tags: RecipeUpdatetagsInput
+  description: String
+  ingredients: IngredientUpdateManyWithoutRecipeInput
+  directions: RecipeUpdatedirectionsInput
+  calories: Int
+  protein: Int
+  carbohydrates: Int
+  fat: Int
+}
+
 input RecipeUpsertWithoutIngredientsInput {
   update: RecipeUpdateWithoutIngredientsDataInput!
   create: RecipeCreateWithoutIngredientsInput!
+}
+
+input RecipeUpsertWithoutPosterInput {
+  update: RecipeUpdateWithoutPosterDataInput!
+  create: RecipeCreateWithoutPosterInput!
 }
 
 input RecipeWhereInput {
@@ -531,34 +767,7 @@ input RecipeWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  poster: String
-  poster_not: String
-  poster_in: [String!]
-  poster_not_in: [String!]
-  poster_lt: String
-  poster_lte: String
-  poster_gt: String
-  poster_gte: String
-  poster_contains: String
-  poster_not_contains: String
-  poster_starts_with: String
-  poster_not_starts_with: String
-  poster_ends_with: String
-  poster_not_ends_with: String
-  posterKey: String
-  posterKey_not: String
-  posterKey_in: [String!]
-  posterKey_not_in: [String!]
-  posterKey_lt: String
-  posterKey_lte: String
-  posterKey_gt: String
-  posterKey_gte: String
-  posterKey_contains: String
-  posterKey_not_contains: String
-  posterKey_starts_with: String
-  posterKey_not_starts_with: String
-  posterKey_ends_with: String
-  posterKey_not_ends_with: String
+  poster: PosterWhereInput
   name: String
   name_not: String
   name_in: [String!]
@@ -645,6 +854,7 @@ input RecipeWhereUniqueInput {
 
 type Subscription {
   ingredient(where: IngredientSubscriptionWhereInput): IngredientSubscriptionPayload
+  poster(where: PosterSubscriptionWhereInput): PosterSubscriptionPayload
   recipe(where: RecipeSubscriptionWhereInput): RecipeSubscriptionPayload
 }
 `

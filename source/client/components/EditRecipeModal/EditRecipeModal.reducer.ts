@@ -1,11 +1,14 @@
 type Action =
+  | { type: 'setTags', tags: string[] }
   | { type: 'closeTag', tag: string }
   | { type: 'showInput' }
   | { type: 'confirmInput', tag?: string }
   | { type: 'reset' }
+  | { type: 'setIngredients', length: number }
   | { type: 'addIngredient' }
   | { type: 'removeIngredient', id: number }
   | { type: 'addDirection' }
+  | { type: 'setDirections', length: number }
   | { type: 'removeDirection', id: number }
 
 interface State {
@@ -28,6 +31,8 @@ export const initialState = {
 
 const reducer = (state: State, action: Action) => {
   switch (action.type) {
+    case 'setTags':
+      return { ...state, tags: action.tags }
     case 'closeTag':
       return { ...state, tags: state.tags.filter(tag => tag !== action.tag) }
 
@@ -48,6 +53,13 @@ const reducer = (state: State, action: Action) => {
 
       return { ...state, inputVisible: false, tags: newTags }
 
+    case 'setIngredients':
+      const ingredients = [] as number[]
+      new Array(action.length).fill(null).forEach(() => {
+        ingredientId += 1
+        ingredients.push(ingredientId)
+      })
+      return { ...state, ingredients }
     case 'addIngredient':
       ingredientId += 1
       return {
@@ -60,6 +72,13 @@ const reducer = (state: State, action: Action) => {
         ingredients: state.ingredients.filter(index => index !== action.id),
       }
 
+    case 'setDirections':
+      const directions = [] as number[]
+      new Array(action.length).fill(null).forEach(() => {
+        directionId += 1
+        directions.push(ingredientId)
+      })
+      return { ...state, directions }
     case 'addDirection':
       directionId += 1
       return {

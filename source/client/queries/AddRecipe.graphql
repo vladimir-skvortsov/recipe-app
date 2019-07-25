@@ -1,7 +1,5 @@
 mutation AddRecipe($props: AddUpdateRecipeProps!) {
   addRecipe(props: $props) {
-    poster
-    name
-    tags
+    id
   }
 }
