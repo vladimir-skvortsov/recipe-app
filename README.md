@@ -8,7 +8,6 @@ Simple recipe app
 What things you need to install the software and how to install them.
 
 * [NodeJS](https://nodejs.org/)
-* [MongoDB](https://www.mongodb.com/)
 * [Docker](https://www.docker.com/)
 * [Docker Compose](https://github.com/docker/compose)
 
@@ -24,20 +23,25 @@ $ yarn
 
 In the project directory, you can run:
 
-* **`yarn build:dev`** - Runs the app in the development mode.
-* **`yarn build:prod`** - Build the app for production.
-* **`yarn docker:i`** - Show all [Docker](https://www.docker.com/) images.
-* **`yarn docker:ps`** - Shows all [Docker](https://www.docker.com/) containers.
+* **`build:dev`** - Build the app in the development mode.
+* **`build:prod`** - Build the app in the production mode.
+* **`docker:c`** - Show all [Docker](https://www.docker.com/) containers.
+* **`docker:i`** - Show all [Docker](https://www.docker.com/) images.
 * **`yarn docker:rc`** - Remove all [Docker](https://www.docker.com/) containers.
 * **`yarn docker:ri`** - Remove all [Docker](https://www.docker.com/) images.
-* **`yarn docker:up`** - Builds the app with [Docker](https://www.docker.com/).
-* **`yarn start:dev`** - Runs server in the development mode.
-* **`yarn start:prod`** - Runs server in the production mode.
-* **`yarn test:approve`** - Approves visual changes.
-* **`yarn test:update`** - Updates snapshots and run tests.
-* **`yarn test:visual`** - Runs visual regression tests.
-* **`yarn storybook`** - Runs [Storybook](https://storybook.js.org/).
-* **`yarn test`** - Runs tests.
+* **`docker:up:dev`** - Build the app with [Docker](https://www.docker.com/) in the development mode.
+* **`docker:up:prod`** - Build the app with [Docker](https://www.docker.com/) in the production mode.
+* **`prisma:deploy`** - Deploy data model to [Prisma](https://www.prisma.io/) server.
+* **`prisma:generate`** - Generate [Prisma](https://www.prisma.io/) client.
+* **`prisma`** - Deploy and generate [Prisma](https://www.prisma.io/).
+* **`start:dev`** - Run server in the development mode.
+* **`start:prod`** - Run server in the production mode.
+* **`storybook`** - Run [Storybook](https://storybook.js.org/).
+* **`test:libraries`** - Check libraries with [Snyk](https://snyk.io/).
+* **`test:lint:staged`** - Lint only staged files.
+* **`test:lint`** - Lint the project.
+* **`test:unit`** - Run unit tests
+* **`test:update`** - Update snapshots.
 
 
 ## Built With
@@ -47,7 +51,7 @@ In the project directory, you can run:
 * [Apollo Server](https://github.com/apollographql/apollo-server/tree/master/packages/apollo-server-express) - Production-ready Node.js GraphQL server for Express.
 * [Apollo](https://github.com/apollographql/apollo-client) - A simple yet functional GraphQL client.
 * [Express](https://expressjs.com/) - Fast, unopinionated, minimalist web framework for NodeJS.
-* [Mongoose](https://github.com/Automattic/mongoose) - MongoDB object modeling designed to work in an asynchronous environment.
+* [Prisma](https://www.prisma.io/) - Database Tools incl. ORM, Migrations and Admin UI (Postgres, MySQL & MongoDB)
 * [React Router](https://github.com/ReactTraining/react-router) - DOM bindings for React Router.
 * [React](https://github.com/facebook/react) - A declarative, efficient, and flexible JavaScript library for building user interfaces.
 * [Styled Components](https://github.com/styled-components/styled-components) - Visual primitives for the component age. Use the best bits of ES6 and CSS to style your apps without stress.
